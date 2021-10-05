@@ -6,8 +6,6 @@ The demo client application (built with React) has two sliders on a web page. Wh
 
 ## What's it look like?
 
-![Demo GIF](https://raw.githubusercontent.com/gabehollombe-aws/appsync-for-pubsub-demo/gh-pages/docs/MultiplayerSlidersDemo.gif)
-
 ## What's going on here?
 
 You can use [AWS AppSync](https://aws.amazon.com/appsync/) as a simple pub/sub system using a pattern called [AppSync Local Resolvers](https://docs.aws.amazon.com/appsync/latest/devguide/tutorial-local-resolvers.html).  This just involves creating a GraphQL mutation that resolves with an AppSync Data Source type of NONE.  Then, you just target that mutation with a subscription, and the data will pass through from the client who issues the mutation to all subscribed clients.
@@ -36,14 +34,14 @@ This example sets up an AppSync API endpoint that authenticates users with an AP
 
 Click the button to load the AWS Amplify Console, connect to GitHub and provide an IAM role for the build. The end to end back-end and front-end deployment should take around 5 minutes:
 
-[![amplifybutton](https://oneclick.amplifyapp.com/button.svg)](https://console.aws.amazon.com/amplify/home#/deploy?repo=https://github.com/gabehollombe-aws/appsync-for-pubsub-demo)
+[![amplifybutton](https://oneclick.amplifyapp.com/button.svg)](https://console.aws.amazon.com/amplify/home#/deploy?repo=https://github.com/navday/multiplayercounter)
 
 ### Get the code and run on my local dev workstation
 
 This project uses AWS Amplify to deploy resources in your account. Assuming you've already instaled and configured the [AWS Amplify CLI](https://docs.amplify.aws/cli), you can run this command to automatically clone this repo, deploy this app in your AWS account, and boot up the local demo dev server:
 
 ```
-mkdir appsync-for-pubsub-demo
-cd appsync-for-pubsub-demo
-amplify init --app https://github.com/gabehollombe-aws/appsync-for-pubsub-demo
+mkdir multiplayercounter
+cd multiplayercounter
+amplify init --app https://github.com/navday/multiplayercounter
 ```
