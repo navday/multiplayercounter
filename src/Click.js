@@ -24,7 +24,7 @@ function Click(props)  {
         return () => subscription.unsubscribe();
     }, [props.name])
     const sendUpdate = async (e) => {
-        let newValue = value + initials;
+        let newValue = value + " " + initials;
         await API.graphql(graphqlOperation(mutations.setCounter, { name: props.name, value: newValue}))
     }
 
