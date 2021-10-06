@@ -5,6 +5,7 @@ import * as mutations from "./graphql/mutations";
 
 function Click(props)  {
     const [value, setValue] = useState("Hi")
+    const [initials, setInitials] = useState("")
     useEffect(() => {
         let subscription
         async function setupSubscription() {
@@ -23,14 +24,15 @@ function Click(props)  {
         return () => subscription.unsubscribe();
     }, [props.name])
     const sendUpdate = async (e) => {
-        let newValue = value + " another user clicked";
+        let newValue = value + initials;
         await API.graphql(graphqlOperation(mutations.setCounter, { name: props.name, value: newValue}))
     }
 
     return (
         <div>
-            <h1>{value}</h1>
+            <input onChange={event => setInitials(event.target.value)} />
             <button onClick={sendUpdate}>Click Me</button>
+            <h1>{value}</h1>
         </div>
     );
 }
