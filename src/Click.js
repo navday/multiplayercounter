@@ -13,7 +13,8 @@ function Click(props)  {
     const [value, setValue] = useState("-> Here you will see the latest message that are sent from the other users on this page.")
 
     const handleAdd = (message) => {
-        setMessages([...messages, message]);
+
+        setMessages((state)  => [...state, message]);
     }
 
     useEffect(() => {
