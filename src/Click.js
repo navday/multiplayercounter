@@ -10,7 +10,7 @@ function Click(props)  {
     const [messages, setMessages] = useState([]);
     const page = queryParams.get('page');
     const user = queryParams.get('user');
-    const [value, setValue] = useState("Set the request parameters in the url to specify page(pubsub-channel) and the user(name of the user in AEM)")
+    const [value, setValue] = useState("")
 
     useEffect(() => {
         const handleAdd = (message) => {
@@ -43,6 +43,7 @@ function Click(props)  {
 
     return (
         <div>
+            <h1>Pub Sub Demo with AWS AppSync</h1>
             <button onClick={sendUpdate}>Send</button>
             <p>Last message: {value}</p>
             <ul>
