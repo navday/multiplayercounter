@@ -12,12 +12,11 @@ function Click(props)  {
     const user = queryParams.get('user');
     const [value, setValue] = useState("-> Here you will see the latest message that are sent from the other users on this page.")
 
-    const handleAdd = (message) => {
-
-        setMessages((state)  => [...state, message]);
-    }
-
     useEffect(() => {
+        const handleAdd = (message) => {
+            setMessages((state)  => [...state, message]);
+        }
+
         let subscription
         async function setupSubscription() {
             subscription = API.graphql({
@@ -29,7 +28,7 @@ function Click(props)  {
                     let counterChange = data.value.data.counterChange;
                     setValue(counterChange.value);
                     let idValue = counterChange.value.toString().split(" | ")[0];
-                    handleAdd({id:idValue, text:Date().toLocaleString()});
+                    handleAdd({id:idValue, text:"User: " + idValue +" Recieved: "+ Date().toLocaleString()},idValue);
                     console.log(messages.length);
                 }
             })
@@ -48,7 +47,7 @@ function Click(props)  {
             <h1>{value}</h1>
             <ul>
                 {messages.map(item => (
-                    <p key={item.id}>{item.text}</p>
+                    <p key={item.id+item.text}>{item.text}</p>
                 ))}
             </ul>
         </div>
