@@ -16,9 +16,6 @@ API.configure(awsconfig)
 export default class App extends Component{
     render = () =>
         <div className="App">
-            <div>
-                 <Click name="myPage"/>
-            </div>
-
+                <Click name="default"/>
         </div>
 }

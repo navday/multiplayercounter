@@ -1,38 +1,55 @@
 import React, {Component, useEffect, useState} from "react";
+import { v4 as uuidv4 } from 'uuid';
 import API, {graphqlOperation} from "@aws-amplify/api";
 import * as subscriptions from "./graphql/subscriptions";
 import * as mutations from "./graphql/mutations";
 
 function Click(props)  {
-    const [value, setValue] = useState("Hi")
-    const [initials, setInitials] = useState("")
+
+    const queryParams = new URLSearchParams(window.location.search);
+    const [messages, setMessages] = useState([]);
+    const page = queryParams.get('page');
+    const user = queryParams.get('user');
+    const [value, setValue] = useState("-> Here you will see the latest message that are sent from the other users on this page.")
+
+    const handleAdd = (message) => {
+        setMessages([...messages, message]);
+    }
+
     useEffect(() => {
         let subscription
         async function setupSubscription() {
             subscription = API.graphql({
                 query: subscriptions.counterChange,
-                variables: { name: props.name},
+                variables: { name: page},
                 authMode: 'API_KEY',
             }).subscribe({
                 next: (data) => {
-                    const counterChange = data.value.data.counterChange;
+                    let counterChange = data.value.data.counterChange;
                     setValue(counterChange.value);
+                    let idValue = counterChange.value.toString().split(" | ")[0];
+                    handleAdd({id:idValue, text:Date().toLocaleString()});
+                    console.log(messages.length);
                 }
             })
         }
         setupSubscription()
         return () => subscription.unsubscribe();
-    }, [props.name])
+    }, [page])
     const sendUpdate = async (e) => {
-        let newValue = value + " " + initials;
-        await API.graphql(graphqlOperation(mutations.setCounter, { name: props.name, value: newValue}))
+        let newValue = user.toUpperCase() + " | " + Date().toLocaleString();
+        await API.graphql(graphqlOperation(mutations.setCounter, { name: page, value: newValue}))
     }
 
     return (
         <div>
-            <input onChange={event => setInitials(event.target.value)} />
-            <button onClick={sendUpdate}>Click Me</button>
+            <button onClick={sendUpdate}>Send</button>
             <h1>{value}</h1>
+            <ul>
+                {messages.map(item => (
+                    <p key={item.id}>{item.text}</p>
+                ))}
+            </ul>
         </div>
     );
 }
