@@ -1,5 +1,5 @@
 import React, { Component, useEffect, useState} from 'react';
-// import Slider from 'rc-slider';
+
 import Click from "./Click";
 import API, { graphqlOperation } from '@aws-amplify/api'
 
